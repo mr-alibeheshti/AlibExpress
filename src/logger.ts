@@ -1,8 +1,12 @@
-import { Middleware } from './types';
-import { Request } from './Request';
-import { Response } from './Response';
+import { Middleware } from "./types";
+import { Request } from "./Request";
+import { Response } from "./Response";
 
-export const Logger: Middleware = (req: Request, res: Response, next: (err?: any) => void) => {
+export const Logger: Middleware = (
+  req: Request,
+  res: Response,
+  next: (err?: any) => void,
+) => {
   const startTime = process.hrtime();
 
   const logRequest = () => {
@@ -11,8 +15,8 @@ export const Logger: Middleware = (req: Request, res: Response, next: (err?: any
     console.log(`${req.method} ${req.url} ${res.statusCode} ${milliseconds}ms`);
   };
 
-  res.on('finish', logRequest);
-  res.on('close', logRequest);
+  res.on("finish", logRequest);
+  res.on("close", logRequest);
 
   next();
 };

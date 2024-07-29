@@ -1,4 +1,4 @@
-import { ServerResponse } from 'http';
+import { ServerResponse } from "http";
 
 export class Response {
   private defaultStatusCode: number = 200;
@@ -11,13 +11,13 @@ export class Response {
 
   json(data: any, statusCode?: number): void {
     this.res.statusCode = statusCode ?? this.defaultStatusCode;
-    this.res.setHeader('Content-Type', 'application/json');
+    this.res.setHeader("Content-Type", "application/json");
     this.res.end(JSON.stringify(data));
   }
 
   redirect(url: string, statusCode: number = 302): void {
     this.res.statusCode = statusCode;
-    this.res.setHeader('Location', url);
+    this.res.setHeader("Location", url);
     this.res.end();
   }
 
@@ -34,8 +34,8 @@ export class Response {
   send(data: any, statusCode?: number): void {
     this.res.statusCode = statusCode ?? this.defaultStatusCode;
 
-    if (typeof data === 'object') {
-      this.res.setHeader('Content-Type', 'application/json');
+    if (typeof data === "object") {
+      this.res.setHeader("Content-Type", "application/json");
       this.res.end(JSON.stringify(data));
     } else {
       this.res.end(data);

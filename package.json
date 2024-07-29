@@ -4,7 +4,8 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "nodemon /home/hajali/Desktop/Code/AlibExpress/Handler_test",
-    "tsc": "tsc --watch"
+    "tsc": "tsc --watch",
+    "prettier": "npx prettier --write ."
   },
   "keywords": [],
   "author": "",

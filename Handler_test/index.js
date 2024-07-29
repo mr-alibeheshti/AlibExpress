@@ -1,44 +1,42 @@
-const AlibExpress = require('../dist/Alibexpress').AlibExpress;
-const { serveStatic } = require('../dist/static');
-const { Validator } = require('../dist/validator');
+const AlibExpress = require("../dist/Alibexpress").AlibExpress;
+const { serveStatic } = require("../dist/static");
+const { Validator } = require("../dist/validator");
 const app = new AlibExpress();
 
-app.use(serveStatic('./public'));
+app.use(serveStatic("./public"));
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.send(req.query);
 });
 
-app.get('/json', (req, res) => {
-  res.json({ message: 'This is a JSON response' });
+app.get("/json", (req, res) => {
+  res.json({ message: "This is a JSON response" });
 });
 
-app.get('/redirect', (req, res) => {
-  res.redirect('https://www.example.com');
+app.get("/redirect", (req, res) => {
+  res.redirect("https://www.example.com");
 });
 
-app.get('/status', (req, res) => {
-  res.send("I'm a teapot",418);
+app.get("/status", (req, res) => {
+  res.send("I'm a teapot", 418);
 });
 
-app.post('/', Validator({ name: true, email: true }), (req, res) => {
-  res.status(201).json({ message: 'POST request received', data: req.body });
+app.post("/", Validator({ name: true, email: true }), (req, res) => {
+  res.status(201).json({ message: "POST request received", data: req.body });
 });
 
-app.put('/data', (req, res) => {
-  console.log(req.body); 
-  res.send('Data received');
-  
+app.put("/data", (req, res) => {
+  console.log(req.body);
+  res.send("Data received");
 });
 
-
-app.get('/header', (req, res) => {
-  res.setHeader('X-Custom-Header', 'CustomValue');
-  res.send('Header set!');
+app.get("/header", (req, res) => {
+  res.setHeader("X-Custom-Header", "CustomValue");
+  res.send("Header set!");
 });
 
-app.get('/end', (req, res) => {
-  res.end('Ending the response without any headers or status code');
+app.get("/end", (req, res) => {
+  res.end("Ending the response without any headers or status code");
 });
 
 const port = process.env.PORT || 3000;

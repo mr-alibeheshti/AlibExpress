@@ -1,8 +1,8 @@
-import { Request } from './Request';
-import { Response } from './Response';
-import { createReadStream, stat } from 'fs';
-import { join } from 'path';
-import { Middleware } from './types';
+import { Request } from "./Request";
+import { Response } from "./Response";
+import { createReadStream, stat } from "fs";
+import { join } from "path";
+import { Middleware } from "./types";
 
 export const serveStatic = (root: string): Middleware => {
   return (req: Request, res: Response, next: () => void) => {
@@ -20,13 +20,13 @@ export const serveStatic = (root: string): Middleware => {
 
       const readStream = createReadStream(filePath);
 
-      readStream.on('open', () => {
+      readStream.on("open", () => {
         readStream.pipe(res.res);
       });
 
-      readStream.on('error', (err) => {
-        console.error('File read error:', err);
-        res.status(500).send('fail');
+      readStream.on("error", (err) => {
+        console.error("File read error:", err);
+        res.status(500).send("fail");
       });
     });
   };
