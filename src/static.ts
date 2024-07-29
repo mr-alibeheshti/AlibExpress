@@ -7,7 +7,6 @@ import { Middleware } from './types';
 export const serveStatic = (root: string): Middleware => {
   return (req: Request, res: Response, next: () => void) => {
     const filePath = req.url ? join(root, req.url) : null;
-
     if (!filePath) {
       next();
       return;
@@ -27,7 +26,7 @@ export const serveStatic = (root: string): Middleware => {
 
       readStream.on('error', (err) => {
         console.error('File read error:', err);
-        res.status(404).send('File not found');
+        res.status(500).send('fail');
       });
     });
   };

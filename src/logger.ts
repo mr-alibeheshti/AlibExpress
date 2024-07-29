@@ -2,7 +2,7 @@ import { Middleware } from './types';
 import { Request } from './Request';
 import { Response } from './Response';
 
-export const requestLogger: Middleware = (req: Request, res: Response, next: (err?: any) => void) => {
+export const Logger: Middleware = (req: Request, res: Response, next: (err?: any) => void) => {
   const startTime = process.hrtime();
 
   const logRequest = () => {

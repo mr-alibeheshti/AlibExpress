@@ -2,13 +2,13 @@ import { createServer, IncomingMessage, ServerResponse } from 'http';
 import { parse } from 'url';
 import { Request } from './Request';
 import { Response } from './Response';
-import { Middleware } from './types';
-import { requestLogger } from './logger';
-import { bodyParser } from './bodyParser'; 
+import { Middleware, Methods } from './types';
+import { Logger } from './logger';
+import { bodyParser } from './bodyParser';
 
 export class AlibExpress {
   private middlewares: Middleware[] = [];
-  private routes: Record<string, Record<string, Middleware[]>> = {
+  private routes: Methods = {
     GET: {},
     POST: {},
     PUT: {},
@@ -16,8 +16,8 @@ export class AlibExpress {
   };
 
   constructor(private isDev: boolean = false) {
-    if (this.isDev) {
-      this.use(requestLogger);
+    if (isDev) {
+      this.use(Logger);
     }
     this.use(bodyParser);
   }
@@ -26,7 +26,7 @@ export class AlibExpress {
     this.middlewares.push(middleware);
   }
 
-  private registerRoute(method: string, path: string, handlers: Middleware[]): void {
+  private registerRoute(method: keyof Methods, path: string, handlers: Middleware[]): void {
     if (!this.routes[method][path]) {
       this.routes[method][path] = [];
     }
@@ -49,7 +49,7 @@ export class AlibExpress {
     this.registerRoute('DELETE', path, handlers);
   }
 
-  listen(port: number, callback: () => void): void {
+  listen(port: number, callback?: () => void): void {
     const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
       const { method, url } = req;
       if (!method || !url) {
@@ -62,7 +62,7 @@ export class AlibExpress {
       const request = new Request(req, parsedUrl.query);
       const response = new Response(res);
 
-      const routeHandlers = this.routes[method]?.[parsedUrl.pathname ?? ''] || [];
+      const routeHandlers = this.routes[method as keyof Methods]?.[parsedUrl.pathname ?? ''] || [];
       const middlewares = [...this.middlewares, ...routeHandlers];
 
       let i = 0;
@@ -77,9 +77,9 @@ export class AlibExpress {
             await new Promise<void>((resolve, reject) => {
               middleware(request, response, (error) => (error ? reject(error) : resolve()));
             });
-            next(); // Move to the next middleware
+            next();
           } catch (error) {
-            next(error); // Pass error to the next handler
+            next(error);
           }
         } else {
           response.send('Not Found', 404);

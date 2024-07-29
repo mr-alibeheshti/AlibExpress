@@ -1,7 +1,7 @@
 const AlibExpress = require('../dist/Alibexpress').AlibExpress;
 const { serveStatic } = require('../dist/static');
 
-const app = new AlibExpress(process.env.NODE_ENV === 'development');
+const app = new AlibExpress();
 
 app.use(serveStatic('./public'));
 
