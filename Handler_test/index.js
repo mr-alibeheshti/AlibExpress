@@ -1,6 +1,5 @@
-const AlibExpress = require("../dist/Alibexpress").AlibExpress;
-const { serveStatic } = require("../dist/static");
-const { Validator } = require("../dist/validator");
+const {AlibExpress} = require("../dist/Alibexpress");
+import { serveStatic } from "../dist/Alibexpress";
 const app = new AlibExpress();
 
 app.use(serveStatic("./public"));

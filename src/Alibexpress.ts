@@ -5,7 +5,6 @@ import { Response } from "./Response";
 import { Middleware, Methods } from "./types";
 import { Logger } from "./logger";
 import { bodyParser } from "./bodyParser";
-
 export class AlibExpress {
   private middlewares: Middleware[] = [];
   private routes: Methods = {
