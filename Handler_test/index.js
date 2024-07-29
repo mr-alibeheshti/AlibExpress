@@ -1,5 +1,4 @@
-const {AlibExpress} = require("../dist/Alibexpress");
-import { serveStatic } from "../dist/Alibexpress";
+const {AlibExpress,Request,Response,Middleware, Methods,Validator,serveStatic,Logger,bodyParser} = require("../dist/index")
 const app = new AlibExpress();
 
 app.use(serveStatic("./public"));
