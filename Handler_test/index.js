@@ -1,6 +1,6 @@
 const AlibExpress = require('../dist/Alibexpress').AlibExpress;
 const { serveStatic } = require('../dist/static');
-
+const { Validator } = require('../dist/validator');
 const app = new AlibExpress();
 
 app.use(serveStatic('./public'));
@@ -21,8 +21,8 @@ app.get('/status', (req, res) => {
   res.send("I'm a teapot",418);
 });
 
-app.post('/', (req, res) => {
-  res.json({ message: 'POST request received', data: req.body },201);
+app.post('/', Validator({ name: true, email: true }), (req, res) => {
+  res.status(201).json({ message: 'POST request received', data: req.body });
 });
 
 app.put('/data', (req, res) => {
