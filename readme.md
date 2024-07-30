@@ -5,7 +5,7 @@ this is npm Page : https://www.npmjs.com/package/alibexpress
 - Simple routing
 - Strongly typed
 - Dev Mode
-- Validation Middlewares
+- Validation Request Data
 - Serving static files
 - Defualt Error Handler(5xx,4xx)
 # How To Install
@@ -35,6 +35,14 @@ const { serveStatic } = require('alibexpress');
 const app = new AlibExpress();
 
 app.use(serveStatic('public'));
+```
+# Dev Mode
+To Enable Logger for req Status, use:
+```
+const AlibExpress = require('alibexpress');
+const { serveStatic } = require('alibexpress');
+const app = new AlibExpress("isDev");
+
 ```
 # Middlewares
 You can add middlewares as follows:
